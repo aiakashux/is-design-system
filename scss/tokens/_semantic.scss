@@ -1,0 +1,377 @@
+$prefix: 'is-' !default;
+$themes: (light: 0, dark: 1);
+
+// Shadow color definitions
+$shadow-neutral-sm-light: rgba(16, 24, 40, 0.05);
+$shadow-neutral-sm-dark: rgba(0, 0, 0, 0.4);
+
+@mixin apply-themed-colors($colors, $theme: light) {
+  $theme-index: map-get($themes, $theme);
+
+  @each $key, $color in $colors {
+    @if type-of($color) == list {
+      --#{$key}-color: #{nth($color, $theme-index + 1)};
+    } @else {
+      --#{$key}-color: #{$color};
+    }
+  }
+}
+
+@mixin merge-themed-colors($theme: light) {
+  @include apply-themed-colors($text-colors, $theme);
+  @include apply-themed-colors($background-colors, $theme);
+  @include apply-themed-colors($surface-colors, $theme);
+  @include apply-themed-colors($icon-colors, $theme);
+  @include apply-themed-colors($border-colors, $theme);
+  @include apply-themed-colors($shadow-colors, $theme);
+  @include apply-themed-colors($decoration-accent-colors, $theme);
+}
+
+$text-colors: (
+        "text-disabled": ($neutral-350, $neutral-350),
+        "text-disabled-subtle": ($neutral-250, $neutral-450),
+        "text-black": ($neutral-800, $neutral-800),
+        "text-black-subtle": ($neutral-600, $neutral-600),
+        "text-black-subtler": ($neutral-400, $neutral-400),
+        "text-white": ($neutral-25, $neutral-50),
+        "text-white-hover": ($neutral-50, $neutral-75),
+        "text-white-subtle": ($neutral-200, $neutral-200),
+
+        "text-link-visited": ($fuchsia-700, $fuchsia-400),
+
+        "text-neutral-default": ($neutral-800, $neutral-75),
+        "text-neutral-default-hover": ($neutral-600, $neutral-200),
+        "text-neutral-active": ($neutral-500, $neutral-250),
+        "text-neutral-subtle": ($neutral-600, $neutral-200),
+        "text-neutral-subtle-hover": ($neutral-700, $neutral-250),
+        "text-neutral-subtler": ($neutral-400, $neutral-300),
+        "text-neutral-inverse": ($neutral-50, $neutral-800),
+        "text-neutral-inverse-subtle": ($neutral-200, $neutral-600),
+
+        "text-brand-default": ($blue-600, $blue-400),
+        "text-brand-hover": ($blue-700, $blue-350),
+        "text-brand-active": ($blue-800, $blue-300),
+        "text-brand-bold": ($blue-700, $blue-200),
+
+        "text-brand-secondary-default": ($orange-600, $orange-400),
+        "text-brand-secondary-hover": ($orange-700, $orange-500),
+        "text-brand-secondary-subtle": ($orange-100, $orange-900),
+        "text-brand-secondary-bold": ($orange-700, $orange-500),
+        "text-brand-secondary-bolder": ($orange-800, $orange-300),
+
+        "text-success-default": ($green-600, $green-500),
+        "text-success-hover": ($green-800, $green-400),
+        "text-success-active": ($green-900, $green-300),
+        "text-success-bold": ($green-700, $green-300),
+
+        "text-warning-default": ($yellow-700, $yellow-300),
+        "text-warning-hover": ($yellow-800, $yellow-400),
+        "text-warning-active": ($yellow-900, $yellow-500),
+        "text-warning-bold": ($yellow-800, $yellow-300),
+
+        "text-danger-default": ($red-600, $red-500),
+        "text-danger-default-alt": ($red-500, $red-200),
+        "text-danger-hover": ($red-700, $red-400),
+        "text-danger-active": ($red-800, $red-350),
+        "text-danger-bold": ($red-700, $red-400),
+
+        "text-info-default": ($sky-600, $sky-200),
+        "text-info-hover": ($sky-700, $sky-300),
+        "text-info-active": ($sky-800, $sky-400),
+        "text-info-bold": ($sky-700, $sky-300),
+);
+
+$surface-colors: (
+        "surface-neutral-default-elevated": ($neutral-25, $neutral-1000),
+        "surface-neutral-default": ($neutral-25, $neutral-1100),
+        "surface-neutral-subtle": ($neutral-50, $neutral-800),
+        "surface-neutral-subtler": ($neutral-50, $neutral-900)
+);
+
+$background-colors: (
+        "background-disable": ($neutral-100, $neutral-450),
+        "background-disable-subtle": ($neutral-50, $neutral-700),
+
+        "background-neutral-default": ($neutral-25, $neutral-1000),
+        "background-neutral-default-rgb": (hexToRGB($neutral-25), hexToRGB($neutral-1000)),
+        "background-neutral-subtle": ($neutral-100, $neutral-500),
+        "background-neutral-subtle-alt": ($neutral-75, $neutral-600),
+        "background-neutral-subtler": ($neutral-50, $neutral-600),
+        "background-neutral-subtler-alt": ($neutral-25, $neutral-500),
+        "background-neutral-bolder": ($neutral-800, $neutral-75),
+        "background-neutral-inverse": ($neutral-1000, $neutral-25),
+        "background-neutral-inverse-rgb": (hexToRGB($neutral-1000), hexToRGB($neutral-25)),
+        "background-neutral-inverse-alt": ($neutral-800, $neutral-450),
+        "background-neutral-inverse-subtle": ($neutral-500, $neutral-400),
+        "background-neutral-default-bg": ($neutral-75, $neutral-900),
+        "background-neutral-highlight-bg": ($neutral-25, $neutral-700),
+
+        "background-brand-default": ($blue-600, $blue-400),
+        "background-brand-subtle": ($blue-100, $blue-800),
+        "background-brand-subtler": ($blue-50, $blue-900),
+        "background-brand-default-rgb": (hexToRGB($blue-600), hexToRGB($blue-400)),
+
+        "background-brand-secondary-default": ($orange-500, $orange-400),
+        "background-brand-secondary-subtle": ($orange-100, $orange-800),
+        "background-brand-secondary-subtle-alt": ($orange-200, $orange-800),
+        "background-brand-secondary-subtler": ($orange-50, $orange-900),
+
+        "background-success-default": ($green-600, $green-500),
+        "background-success-default-rgb": (hexToRGB($green-600), hexToRGB($green-500)),
+        "background-success-subtle": ($green-100, $green-800),
+        "background-success-subtler": ($green-50, $green-900),
+        "background-success-subtle-alt": ($green-200, $green-800),
+        "background-success-bold": ($green-600, $green-700),
+        "background-success-default-hover": ($green-700, $green-500),
+        "background-success-subtle-hover": ($green-100, $green-900),
+        "background-success-subtler-hover": ($green-50, $green-900),
+        "background-success-bold-hover": ($green-700, $green-800),
+
+        "background-warning-default": ($yellow-300, $yellow-300),
+        "background-warning-default-rgb": (hexToRGB($yellow-300), hexToRGB($yellow-300)),
+        "background-warning-subtle": ($yellow-100, $yellow-800),
+        "background-warning-subtle-alt": ($yellow-100, $yellow-900),
+        "background-warning-subtler": ($yellow-50, $yellow-900),
+        "background-warning-subtler-alt": ($yellow-100, $yellow-900),
+        "background-warning-hover": ($yellow-500, $yellow-600),
+        "background-warning-subtle-hover": ($yellow-200, $yellow-700),
+        "background-warning-subtler-hover": ($yellow-50, $yellow-900),
+
+        "background-danger-default": ($red-600, $red-500),
+        "background-danger-default-rgb": (hexToRGB($red-600), hexToRGB($red-500)),
+        "background-danger-subtle": ($red-50, $red-800),
+        "background-danger-subtle-alt": ($red-100, $red-900),
+        "background-danger-subtler": ($red-25, $red-900),
+        "background-danger-hover": ($red-700, $red-700),
+        "background-danger-subtle-hover": ($red-100, $red-700),
+        "background-danger-subtle-alt-hover": ($red-300, $red-600),
+        "background-danger-subtler-hover": ($red-50, $red-900),
+        "background-danger-bolder": ($red-700, $red-700),
+        "background-danger-bolder-hover": ($red-800, $red-800),
+
+        "background-info-default": ($sky-500, $sky-300),
+        "background-info-default-rgb": (hexToRGB($sky-500), hexToRGB($sky-300)),
+        "background-info-subtle": ($sky-100, $sky-800),
+        "background-info-subtler": ($sky-50, $sky-900),
+        "background-info-hover": ($sky-700, $sky-600),
+        "background-info-subtle-hover": ($sky-100, $sky-800),
+        "background-info-subtler-hover": ($sky-100, $sky-700),
+);
+
+$icon-colors: (
+        "icon-disable": ($neutral-300, $neutral-400),
+        "icon-disable-subtle": ($neutral-250, $neutral-450),
+        "icon-white": ($neutral-25, $neutral-50),
+        "icon-inverse": ($neutral-25, $neutral-900),
+        "icon-black": ($neutral-800, $neutral-800),
+        "icon-black-subtle": ($neutral-600, $neutral-600),
+        "icon-black-subtler": ($neutral-400, $neutral-400),
+        "icon-blue": ($blue-600, $blue-600),
+
+        "icon-neutral-default": ($neutral-800, $neutral-75),
+        "icon-neutral-default-alt": ($neutral-800, $neutral-350),
+        "icon-neutral-hover": ($neutral-600, $neutral-200),
+        "icon-neutral-active": ($neutral-500, $neutral-250),
+        "icon-neutral-subtle": ($neutral-600, $neutral-200),
+        "icon-neutral-subtle-hover": ($neutral-700, $neutral-250),
+        "icon-neutral-subtler": ($neutral-400, $neutral-300),
+        "icon-neutral-subtler-alt": ($neutral-250, $neutral-400),
+        "icon-neutral-inverse": ($neutral-50, $neutral-800),
+        "icon-neutral-inverse-hover": ($neutral-200, $neutral-600),
+
+        "icon-brand-default": ($blue-600, $blue-400),
+        "icon-brand-hover": ($blue-700, $blue-350),
+        "icon-brand-active": ($blue-800, $blue-300),
+        "icon-brand-subtle": ($blue-300, $blue-350),
+        "icon-brand-bold": ($blue-700, $blue-300),
+
+        "icon-brand-secondary-default": ($orange-600, $orange-400),
+        "icon-brand-secondary-hover": ($orange-700, $orange-500),
+        "icon-brand-secondary-subtle": ($orange-100, $orange-900),
+        "icon-brand-secondary-bold": ($orange-700, $orange-500),
+        "icon-brand-secondary-bolder": ($orange-800, $orange-300),
+
+        "icon-success-default": ($green-600, $green-500),
+        "icon-success-hover": ($green-800, $green-400),
+        "icon-success-active": ($green-900, $green-300),
+        "icon-success-bold": ($green-700, $green-300),
+
+        "icon-warning-default": ($yellow-700, $yellow-300),
+        "icon-warning-hover": ($yellow-800, $yellow-400),
+        "icon-warning-active": ($yellow-900, $yellow-500),
+        "icon-warning-bold": ($yellow-800, $yellow-300),
+
+        "icon-danger-default": ($red-600, $red-500),
+        "icon-danger-default-alt": ($red-500, $red-200),
+        "icon-danger-hover": ($red-700, $red-400),
+        "icon-danger-active": ($red-800, $red-350),
+        "icon-danger-bold": ($red-700, $red-400),
+
+        "icon-info-default": ($sky-600, $sky-200),
+        "icon-info-hover": ($sky-700, $sky-300),
+        "icon-info-active": ($sky-800, $sky-400),
+        "icon-info-bold": ($sky-700, $sky-300),
+);
+
+$border-colors: (
+        "border-disable": ($neutral-350, $neutral-350),
+        "border-disable-subtle": ($neutral-250, $neutral-450),
+        "border-disable-subtler": ($neutral-50, $neutral-700),
+        "border-white": ($neutral-25, $neutral-50),
+        "border-black-subtle": ($neutral-350, $neutral-400),
+
+        "border-neutral-default": ($neutral-500, $neutral-350),
+        "border-neutral-default-alt": ($neutral-250, $neutral-300),
+        "border-neutral-hover": ($neutral-450, $neutral-250),
+        "border-neutral-active": ($neutral-400, $neutral-200),
+        "border-neutral-subtle": ($neutral-200, $neutral-500),
+        "border-neutral-subtle-alt": ($neutral-250, $neutral-400),
+        "border-neutral-subtle-hover": ($neutral-300, $neutral-400),
+        "border-neutral-subtler": ($neutral-75, $neutral-600),
+        "border-neutral-subtler-alt": ($neutral-100, $neutral-500),
+        "border-neutral-subtler-hover": ($neutral-200, $neutral-500),
+        "border-neutral-bold": ($neutral-600, $neutral-200),
+        "border-neutral-bold-hover": ($neutral-700, $neutral-250),
+        "border-neutral-bolder": ($neutral-400, $neutral-300),
+        "border-neutral-bolder-hover": ($neutral-500, $neutral-200),
+        "border-neutral-inverse": ($neutral-50, $neutral-600),
+
+        "border-brand-default": ($blue-600, $blue-400),
+        "border-brand-hover": ($blue-700, $blue-350),
+        "border-brand-active": ($blue-800, $blue-300),
+        "border-brand-subtle": ($blue-100, $blue-800),
+        "border-brand-subtle-hover": ($blue-200, $blue-700),
+        "border-brand-bold": ($blue-900, $blue-100),
+
+        "border-success-default": ($green-600, $green-500),
+        "border-success-hover": ($green-800, $green-400),
+        "border-success-active": ($green-900, $green-300),
+        "border-success-subtle": ($green-50, $green-800),
+        "border-success-subtle-hover": ($green-100, $green-600),
+
+        "border-warning-default": ($yellow-700, $yellow-300),
+        "border-warning-hover": ($yellow-800, $yellow-400),
+        "border-warning-active": ($yellow-900, $yellow-500),
+        "border-warning-subtle": ($yellow-100, $yellow-700),
+        "border-warning-subtle-hover": ($yellow-100, $yellow-700),
+
+        "border-danger-default": ($red-600, $red-500),
+        "border-danger-default-alt": ($red-500, $red-200),
+        "border-danger-hover": ($red-700, $red-400),
+        "border-danger-active": ($red-800, $red-350),
+        "border-danger-subtle": ($red-100, $red-800),
+        "border-danger-subtle-hover": ($red-200, $red-700),
+
+        "border-info-default": ($sky-600, $sky-200),
+        "border-info-hover": ($sky-700, $sky-300),
+        "border-info-subtle": ($sky-100, $sky-800),
+        "border-info-subtle-hover": ($sky-100, $sky-700)
+);
+
+$shadow-colors: (
+        "shadow-neutral-sm": ($shadow-neutral-sm-light, $shadow-neutral-sm-dark),
+        "shadow-shadow-default": ($neutral-shdw-1500, $neutral-shdw-1510)
+);
+
+$decoration-accent-colors: (
+        "decoration-accent-neutral": ($neutral-400, $neutral-300),
+        "decoration-accent-neutral-subtle": ($neutral-300, $neutral-400),
+        "decoration-accent-neutral-subtler": ($neutral-75, $neutral-500),
+        "decoration-accent-neutral-bold": ($neutral-500, $neutral-250),
+        "decoration-accent-neutral-bolder": ($neutral-800, $neutral-75),
+
+        "decoration-accent-fuchsia": ($fuchsia-400, $fuchsia-700),
+        "decoration-accent-fuchsia-subtle": ($fuchsia-300, $fuchsia-800),
+        "decoration-accent-fuchsia-subtler": ($fuchsia-100, $fuchsia-900),
+        "decoration-accent-fuchsia-bold": ($fuchsia-600, $fuchsia-500),
+        "decoration-accent-fuchsia-bolder": ($fuchsia-700, $fuchsia-400),
+
+        "decoration-accent-sky": ($sky-500, $sky-500),
+        "decoration-accent-sky-subtle": ($sky-400, $sky-600),
+        "decoration-accent-sky-subtler": ($sky-200, $sky-800),
+        "decoration-accent-sky-bold": ($sky-600, $sky-400),
+        "decoration-accent-sky-bolder": ($sky-800, $sky-200),
+
+        "decoration-accent-green": ($green-400, $green-600),
+        "decoration-accent-green-subtle": ($green-300, $green-700),
+        "decoration-accent-green-subtler": ($green-100, $green-900),
+        "decoration-accent-green-bold": ($green-500, $green-400),
+        "decoration-accent-green-bolder": ($green-700, $green-200),
+
+        "decoration-accent-red": ($red-400, $red-500),
+        "decoration-accent-red-subtle": ($red-200, $red-600),
+        "decoration-accent-red-subtler": ($red-100, $red-800),
+        "decoration-accent-red-bold": ($red-600, $red-200),
+        "decoration-accent-red-bolder": ($red-800, $red-100),
+
+        "decoration-accent-yellow": ($yellow-400, $yellow-600),
+        "decoration-accent-yellow-subtle": ($yellow-300, $yellow-700),
+        "decoration-accent-yellow-subtler": ($yellow-100, $yellow-800),
+        "decoration-accent-yellow-bold": ($yellow-700, $yellow-300),
+        "decoration-accent-yellow-bolder": ($yellow-800, $yellow-200),
+
+        "decoration-accent-orange": ($orange-400, $orange-500),
+        "decoration-accent-orange-subtle": ($orange-300, $orange-600),
+        "decoration-accent-orange-subtler": ($orange-100, $orange-800),
+        "decoration-accent-orange-bold": ($orange-600, $orange-300),
+        "decoration-accent-orange-bolder": ($orange-800, $orange-100),
+
+        "decoration-accent-mose": ($mose-400, $mose-500),
+        "decoration-accent-mose-subtle": ($mose-300, $mose-600),
+        "decoration-accent-mose-subtler": ($mose-100, $mose-800),
+        "decoration-accent-mose-bold": ($mose-500, $mose-300),
+        "decoration-accent-mose-bolder": ($mose-700, $mose-100),
+
+        "decoration-accent-pink": ($pink-400, $pink-500),
+        "decoration-accent-pink-subtle": ($pink-300, $pink-700),
+        "decoration-accent-pink-subtler": ($pink-100, $pink-900),
+        "decoration-accent-pink-bold": ($pink-500, $pink-400),
+        "decoration-accent-pink-bolder": ($pink-800, $pink-200),
+
+        "decoration-accent-rose": ($rose-400, $rose-500),
+        "decoration-accent-rose-subtle": ($rose-300, $rose-600),
+        "decoration-accent-rose-subtler": ($rose-100, $rose-800),
+        "decoration-accent-rose-bold": ($rose-500, $rose-300),
+        "decoration-accent-rose-bolder": ($rose-700, $rose-100)
+);
+
+// Chart colors (static values from Figma)
+$chart-colors: (
+        "chart-color-sky-blue": #4bb6f7,
+        "chart-color-purple": #a97aff,
+        "chart-color-coral": #ff75a1,
+        "chart-color-lime": #8bc63a,
+        "chart-color-orange": #fe885a,
+        "chart-color-teal": #00dcca,
+        "chart-color-magenta": #d65dc8,
+        "chart-color-dark-teal": #1ab7bf,
+        "chart-color-yellow": #f0ba3d
+);
+
+:root,
+[data-is-theme=dark] {
+  color-scheme: dark;
+  @include merge-themed-colors(dark);
+
+  // Apply chart colors
+  @each $key, $value in $chart-colors {
+    --color-#{$key}: #{$value};
+  }
+}
+
+[data-is-theme=light] {
+  color-scheme: light;
+  @include merge-themed-colors(light);
+
+  // Apply chart colors
+  @each $key, $value in $chart-colors {
+    --color-#{$key}: #{$value};
+  }
+}
+
+:root {
+  --#{$prefix}body-color: var(--text-neutral-default-color);
+  --#{$prefix}background-neutral-black-color: #{$neutral-800};
+
+  @include apply-themed-colors($decoration-accent-colors);
+}
